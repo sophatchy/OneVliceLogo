@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ONE VOICE: Logo Brand Guideline</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* DARK MODE (Default) */
+            --bg-color: #050505;
+            --slide-bg: rgba(255, 255, 255, 0.03);
+            --primary: #F4B622;   /* Brand Gold */
+            --secondary: #8b5cf6; /* Violet */
+            --accent: #34d399;    /* Emerald */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border: rgba(255,255,255,0.08);
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --spotlight-opacity: 0.6;
+            
+            /* Cinematic Easing */
+            --ease-cinematic: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-enter: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f0f2f5;
+            --slide-bg: rgba(255, 255, 255, 0.6);
+            --primary: #d97706;   /* Darker Gold */
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border: rgba(0,0,0,0.1);
+            --card-glass: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 1);
+            --spotlight-opacity: 0.2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Kantumruy Pro', 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            position: fixed;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Moving Spotlight Background */
+        .spotlight-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .spotlight {
+            position: absolute;
+            width: 1200px;
+            height: 1200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 182, 34, 0.1), transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(80px);
+            transition: all 1.5s var(--ease-cinematic), background 0.5s ease;
+            opacity: var(--spotlight-opacity);
+        }
+
+        #presentation-container { 
+            width: 100%; 
+            height: 100%; 
+            position: relative; 
+            z-index: 1;
+            touch-action: none;
+        }
+
+        .click-layer {
+            position: absolute; top: 0; height: 100%; width: 25%; 
+            z-index: 5000; 
+            cursor: pointer;
+        }
+        #click-left { left: 0; }
+        #click-right { right: 0; }
+
+        /* Cinematic Transitions */
+        .slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            padding: 80px 10%;
+            display: flex; flex-direction: column; justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1); 
+            filter: blur(10px);
+            transition: opacity 0.8s var(--ease-cinematic),
+                        transform 1.2s var(--ease-cinematic),
+                        filter 0.8s var(--ease-cinematic);
+            will-change: transform, opacity, filter;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+            filter: blur(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            opacity: 0;
+            transform: scale(0.95) translateX(-50px);
+            filter: blur(10px);
+            z-index: 1;
+        }
+
+        .slide.next {
+            opacity: 0;
+            transform: scale(1.05) translateX(50px);
+            filter: blur(10px);
+            z-index: 5;
+        }
+
+        /* Staggered Content Entrance */
+        .slide > * {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 1s var(--ease-enter);
+        }
+
+        .slide.active > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.active > *:nth-child(1) { transition-delay: 0.1s; }
+        .slide.active > *:nth-child(2) { transition-delay: 0.2s; }
+        .slide.active > *:nth-child(3) { transition-delay: 0.3s; }
+        
+        .slide .card, .slide li, .slide img {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-cinematic);
+        }
+        .slide.active .card, .slide.active li, .slide.active img {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide.active .card:nth-child(1) { transition-delay: 0.4s; }
+        .slide.active .card:nth-child(2) { transition-delay: 0.5s; }
+        .slide.active .card:nth-child(3) { transition-delay: 0.6s; }
+
+        /* Typography */
+        h1 { 
+            font-size: 5.5rem; 
+            font-weight: 800; 
+            margin-bottom: 20px; 
+            letter-spacing: -2px;
+            line-height: 1.1;
+            background: linear-gradient(180deg, var(--text-main) 0%, var(--text-muted) 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        
+        h2 { 
+            font-size: 3rem; 
+            color: var(--text-main); 
+            font-weight: 700;
+            margin-bottom: 30px; 
+            letter-spacing: -1px;
+        }
+        
+        p, li { font-size: 1.4rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 15px; }
+        
+        .subhead {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Components */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; width: 100%; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; }
+        
+        .card {
+            background: var(--card-glass); 
+            border: 1px solid var(--card-border);
+            border-radius: 24px; 
+            padding: 40px; 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s var(--ease-cinematic);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .color-swatch {
+            height: 120px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Controls */
+        .controls-minimal {
+            position: absolute; bottom: 40px; right: 60px; 
+            display: flex; align-items: center; gap: 20px;
+            z-index: 10000;
+        }
+
+        .btn-minimal { 
+            background: transparent; 
+            border: 1px solid var(--border); 
+            color: var(--text-muted); 
+            width: 48px; height: 48px; border-radius: 50%; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; pointer-events: auto;
+        }
+        .btn-minimal:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        
+        .theme-toggle {
+            position: absolute; top: 40px; left: 40px;
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10000;
+            color: var(--text-main);
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-indicator {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--border); z-index: 100;
+        }
+        .progress-fill {
+            height: 100%; width: 0%;
+            background: var(--primary);
+            transition: width 1s var(--ease-cinematic);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .slide-number {
+            position: absolute; bottom: 40px; left: 60px;
+            font-weight: 600; color: var(--text-muted);
+            font-size: 0.9rem; letter-spacing: 1px;
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 1024px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 40px; }
+            h1 { font-size: 3.5rem; }
+            h2 { font-size: 2.2rem; }
+            .slide { padding: 80px 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="spotlight-container">
+    <div class="spotlight" id="spotlight"></div>
+</div>
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+    <i class="fa-solid fa-moon"></i>
+</button>
+
+<div class="progress-indicator"><div class="progress-fill" id="progress-bar"></div></div>
+<div class="slide-number" id="slide-counter">01 / 12</div>
+
+<div id="presentation-container">
+    <div class="click-layer" id="click-left"></div>
+    <div class="click-layer" id="click-right"></div>
+
+    <!-- Slide 1: Intro -->
+    <div class="slide" data-theme="gold">
+        <div class="grid-2">
+            <div>
+                <span class="subhead">BRAND GUIDELINES</span>
+                <h1>ONE VOICE</h1>
+                <p style="font-size: 2.2rem; color: var(--primary); font-weight: 300;">សម្លេងខ្មែរតែមួយ</p>
+                <p>Unified presence grounded in dignity and cultural strength.</p>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="width: 100%; max-width: 500px; filter: drop-shadow(0 0 30px rgba(244,182,34,0.2));" alt="Primary Logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Essence -->
+    <div class="slide">
+        <span class="subhead">THE CORE</span>
+        <h2>Brand Essence</h2>
+        <div class="grid-3">
+            <div class="card">
+                <i class="fa-solid fa-earth-asia" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>Identity</h3>
+                <p>A unified voice for peace, culture, and national integrity.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-shield-heart" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>Value</h3>
+                <p>Rooted in dignity. We speak as one shared national voice.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-seedling" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>Vision</h3>
+                <p>Expanding peacefully from the center of Khmer culture to the world.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Concept -->
+    <div class="slide">
+        <div class="grid-2">
+            <div style="display: flex; justify-content: center;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-02-1.png" style="width: 300px; height: 300px;" alt="Spiral Concept">
+            </div>
+            <div>
+                <span class="subhead">THE SYMBOL</span>
+                <h2>The Spiral Mark</h2>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="border-left: 2px solid var(--primary); padding-left: 20px; margin-bottom: 20px;">
+                        <strong>Movement:</strong> Collective gathering of voices.
+                    </li>
+                    <li style="border-left: 2px solid var(--primary); padding-left: 20px; margin-bottom: 20px;">
+                        <strong>Strength:</strong> Inner spiritual awakening.
+                    </li>
+                    <li style="border-left: 2px solid var(--primary); padding-left: 20px;">
+                        <strong>Culture:</strong> Continuity of the Khmer spirit.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Variations -->
+    <div class="slide">
+        <span class="subhead">VARIATIONS</span>
+        <h2>Logo Structure</h2>
+        <div class="grid-3">
+            <div class="card">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" alt="Horizontal">
+                <h3>Horizontal</h3>
+                <p>Primary logo for websites, letterheads, and decks.</p>
+            </div>
+            <div class="card">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-03-1.png" alt="Vertical">
+                <h3>Vertical</h3>
+                <p>Secondary lockup for posters and social media profile icons.</p>
+            </div>
+            <div class="card">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-02-1.png" alt="Symbol">
+                <h3>Symbol Only</h3>
+                <p>Used as a watermark, favicon, or minimal brand touchpoint.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Colors -->
+    <div class="slide">
+        <span class="subhead">PALETTE</span>
+        <h2>Brand Colors</h2>
+        <div class="grid-2">
+            <div>
+                <div class="color-swatch" style="background: #F4B622; color: #000;">#F4B622</div>
+                <h3>Golden Voice Yellow</h3>
+                <p>Represents sacred energy, spiritual light, and moral strength.</p>
+            </div>
+            <div>
+                <div class="color-swatch" style="background: #1E1E1E; border: 1px solid rgba(255,255,255,0.1);">#1E1E1E</div>
+                <h3>Deep Charcoal</h3>
+                <p>Represents stability, depth, and serious cultural commitment.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Typography -->
+    <div class="slide">
+        <span class="subhead">TYPOGRAPHY</span>
+        <h2>The Typeface</h2>
+        <div class="grid-2">
+            <div class="card">
+                <p class="subhead" style="margin-bottom: 10px;">Primary (Khmer)</p>
+                <h2 style="font-family: 'Kantumruy Pro';">សម្លេងខ្មែរ</h2>
+                <p>Niradei: Selected for its cultural elegance and modern readability.</p>
+            </div>
+            <div class="card">
+                <p class="subhead" style="margin-bottom: 10px;">Secondary (English)</p>
+                <h2 style="font-family: 'Plus Jakarta Sans';">ONE VOICE</h2>
+                <p>Jakarta Sans / Urbanist: Clean, geometric, and global.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Safety -->
+    <div class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="subhead">RULES</span>
+                <h2>Clear Space</h2>
+                <p>Ensure a minimum safety zone equal to the radius of the inner spiral circle on all sides.</p>
+                <p style="margin-top: 20px;"><strong>Minimum Size:</strong> 120px (Digital) or 30mm (Print).</p>
+            </div>
+            <div class="card" style="display: flex; justify-content: center; border: 1px dashed var(--primary);">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="opacity: 0.5;">
+                <p style="text-align: center; font-size: 0.8rem; margin-top: 10px;">SAFE ZONE BOUNDARY</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Contrast -->
+    <div class="slide">
+        <span class="subhead">APPLICATION</span>
+        <h2>Usage Rules</h2>
+        <div class="grid-3">
+            <div class="card" style="background: #333;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png">
+                <p style="color: #4ade80;"><i class="fa-solid fa-circle-check"></i> Standard</p>
+            </div>
+            <div class="card" style="background: #fff;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-03-1.png">
+                <p style="color: #4ade80;"><i class="fa-solid fa-circle-check"></i> Light Surface</p>
+            </div>
+            <div class="card" style="background: #F4B622;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-03-1.png" style="filter: brightness(0);">
+                <p style="color: #4ade80;"><i class="fa-solid fa-circle-check"></i> Contrast Solid</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Misuse -->
+    <div class="slide">
+        <span class="subhead">PROHIBITED</span>
+        <h2>Logo Misuse</h2>
+        <div class="grid-3">
+            <div class="card" style="text-align: center;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="transform: skew(20deg); opacity: 0.5;">
+                <p style="color: #ef4444;">No Distortions</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="filter: hue-rotate(90deg); opacity: 0.5;">
+                <p style="color: #ef4444;">No Unapproved Colors</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="filter: drop-shadow(5px 5px 0 #000); opacity: 0.5;">
+                <p style="color: #ef4444;">No Shadows/Outlines</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Vibe -->
+    <div class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="subhead">TONE</span>
+                <h2>Visual Direction</h2>
+                <p>ONE VOICE should feel dignified, serious, and cultural. Avoid cartoonish styles or commercial "loudness."</p>
+            </div>
+            <div class="card">
+                <p style="font-size: 1.8rem; font-weight: 800;">DIGNIFIED</p>
+                <p style="font-size: 1.8rem; font-weight: 800; opacity: 0.6;">POWERFUL</p>
+                <p style="font-size: 1.8rem; font-weight: 800; opacity: 0.3;">CALM</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Tagline -->
+    <div class="slide" style="text-align: center;">
+        <span class="subhead">CORE MESSAGE</span>
+        <h1 style="font-size: 4.5rem; line-height: 1.2;">"We Rise With Dignity.<br>We speak as ONE VOICE."</h1>
+        <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-02-1.png" style="height: 100px; margin-top: 40px; opacity: 0.5;">
+    </div>
+
+    <!-- Slide 12: Contact -->
+    <div class="slide" style="text-align: center;">
+        <span class="subhead">ASSETS</span>
+        <h2>Questions & Resources</h2>
+        <p>For official logo files and asset requests, please contact:</p>
+        <div class="card" style="display: inline-block; margin-top: 30px; font-size: 1.8rem; color: var(--primary); font-weight: 700;">
+            identity@onevoicecambodia.org
+        </div>
+        <p style="margin-top: 40px; font-size: 1rem;">ONE VOICE • BRAND IDENTITY SYSTEM v1.0</p>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls-minimal">
+        <button class="btn-minimal" id="btn-prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="btn-minimal" id="btn-next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress-bar');
+        const slideCounter = document.getElementById('slide-counter');
+        const spotlight = document.getElementById('spotlight');
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const container = document.getElementById('presentation-container');
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            const isLight = html.getAttribute('data-theme') === 'light';
+            if (isLight) {
+                html.removeAttribute('data-theme');
+                themeToggle.querySelector('i').className = 'fa-solid fa-moon';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeToggle.querySelector('i').className = 'fa-solid fa-sun';
+            }
+        });
+
+        function updateUI() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev', 'next');
+                if (index === currentSlide) slide.classList.add('active');
+                else if (index < currentSlide) slide.classList.add('prev');
+                else slide.classList.add('next');
+            });
+
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            slideCounter.textContent = `${(currentSlide + 1).toString().padStart(2, '0')} / ${slides.length}`;
+            
+            // Subtle spotlight move
+            spotlight.style.transform = `translate(calc(-50% + ${Math.random()*10}px), calc(-50% + ${Math.random()*10}px))`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateUI();
+            }
+        }
+
+        btnNext.addEventListener('click', nextSlide);
+        btnPrev.addEventListener('click', prevSlide);
+        document.getElementById('click-left').addEventListener('click', prevSlide);
+        document.getElementById('click-right').addEventListener('click', nextSlide);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch
+        let touchStartX = 0;
+        container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
+        container.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
+        }, {passive: true});
+
+        updateUI();
+    });
+</script>
+
+</body>
+</html>

@@ -143,12 +143,12 @@
         .slide.active > *:nth-child(2) { transition-delay: 0.25s; }
         .slide.active > *:nth-child(3) { transition-delay: 0.35s; }
         
-        .slide .card, .slide li, .slide .asset-preview {
+        .slide .card, .slide li, .slide .asset-preview, .slide .mockup-img {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.7s var(--ease-cinematic);
         }
-        .slide.active .card, .slide.active li, .slide.active .asset-preview {
+        .slide.active .card, .slide.active li, .slide.active .asset-preview, .slide.active .mockup-img {
             opacity: 1;
             transform: translateY(0);
         }
@@ -222,6 +222,16 @@
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
         }
 
+        .mockup-img {
+            width: 100%;
+            height: auto;
+            max-height: 65vh;
+            object-fit: cover;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5);
+        }
+
         .color-swatch {
             height: 100px;
             border-radius: 16px;
@@ -290,6 +300,7 @@
             .slide { padding: 60px 40px; }
             h1 { font-size: 3rem; }
             h2 { font-size: 2.2rem; }
+            .mockup-img { max-height: 40vh; }
         }
     </style>
 </head>
@@ -304,7 +315,7 @@
 </button>
 
 <div class="progress-indicator"><div class="progress-fill" id="progress-bar"></div></div>
-<div class="slide-number" id="slide-counter">01 / 12</div>
+<div class="slide-number" id="slide-counter">01 / 15</div>
 
 <div id="presentation-container">
     <div class="click-layer" id="click-left"></div>
@@ -520,7 +531,43 @@
         </div>
     </div>
 
-    <!-- Slide 11: Tagline (Clean) -->
+    <!-- Slide 11: Application - Stationery -->
+    <div class="slide">
+        <div class="grid-2">
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/19888193_Elegant_branding_stationery_set_mockup_template_Premium_Psd_4.jpg" class="mockup-img" alt="Stationery Mockup">
+            <div>
+                <span class="subhead">APPLICATION</span>
+                <h2>Corporate Stationery</h2>
+                <p>Consistency in physical correspondence reinforces professionalism. The logo is applied with minimal clutter on premium paper stock, favoring white space and the primary charcoal/gold palette.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Application - Apparel -->
+    <div class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="subhead">APPLICATION</span>
+                <h2>Identity & Community</h2>
+                <p>On apparel, the icon serves as a mark of unity. We favor large-scale, high-contrast placement that allows the spiral to be recognized instantly from a distance.</p>
+            </div>
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/422977444_15476b43-b97f-479b-9425-2d8915a59391-scaled.jpg" class="mockup-img" alt="Apparel Mockup">
+        </div>
+    </div>
+
+    <!-- Slide 13: Application - Environment -->
+    <div class="slide">
+        <div class="grid-2">
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/134026767_1aa0632a-8c18-4330-b973-d7aec5ab6124-scaled.jpg" class="mockup-img" alt="Environmental Mockup">
+            <div>
+                <span class="subhead">APPLICATION</span>
+                <h2>Lifestyle & Experience</h2>
+                <p>The brand lives in the real world through sustainable materials and thoughtful design. These touchpoints bridge the gap between cultural heritage and modern daily utility.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Tagline -->
     <div class="slide" style="text-align: center;">
         <span class="subhead">THE PROMISE</span>
         <h1 style="font-size: clamp(2rem, 6vw, 5rem); line-height: 1.25; background: var(--text-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
@@ -528,7 +575,7 @@
         </h1>
     </div>
 
-    <!-- Slide 12: Discussion (Clean) -->
+    <!-- Slide 15: Discussion -->
     <div class="slide" style="text-align: center;">
         <span class="subhead">COLLABORATION</span>
         <h2>Questions & Discussion</h2>

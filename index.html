@@ -15,10 +15,10 @@
 
     <style>
         :root {
-            /* DARK MODE (Default) */
+            /* DARK MODE (Version 1: Charcoal & Gold) */
             --bg-color: #050505;
             --slide-bg: rgba(255, 255, 255, 0.02);
-            --primary: #F4B622;   /* Brand Gold */
+            --primary: #F4B622;   
             --text-main: #ffffff;
             --text-muted: #94a3b8;
             --border: rgba(255,255,255,0.08);
@@ -26,20 +26,20 @@
             --card-border: rgba(255, 255, 255, 0.05);
             --spotlight-opacity: 0.6;
             
-            /* Cinematic Easing */
             --ease-cinematic: cubic-bezier(0.19, 1, 0.22, 1);
             --ease-enter: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         [data-theme="light"] {
-            --bg-color: #f8fafc;
-            --slide-bg: rgba(255, 255, 255, 0.6);
+            /* LIGHT MODE (Version 2: Paper & Gold) */
+            --bg-color: #fcfcfc;
+            --slide-bg: rgba(0, 0, 0, 0.02);
             --primary: #d97706;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border: rgba(0,0,0,0.08);
-            --card-glass: rgba(255, 255, 255, 0.8);
-            --card-border: rgba(0, 0, 0, 0.05);
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border: rgba(0,0,0,0.06);
+            --card-glass: #ffffff;
+            --card-border: rgba(0, 0, 0, 0.08);
             --spotlight-opacity: 0.15;
         }
 
@@ -54,622 +54,562 @@
             width: 100vw;
             user-select: none;
             position: fixed;
-            transition: background-color 0.6s var(--ease-cinematic);
+            transition: background-color 0.8s var(--ease-cinematic);
         }
 
-        /* Background Visuals */
+        /* Background Decor */
         .spotlight-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden;
-            z-index: 0;
-            pointer-events: none;
+            overflow: hidden; z-index: 0; pointer-events: none;
         }
         
         .spotlight {
             position: absolute;
-            width: 1400px;
-            height: 1400px;
+            width: 1400px; height: 1400px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(244, 182, 34, 0.08), transparent 70%);
+            background: radial-gradient(circle, rgba(244, 182, 34, 0.1), transparent 70%);
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             filter: blur(100px);
-            transition: transform 2s var(--ease-cinematic), background 0.6s ease;
+            transition: transform 2s var(--ease-cinematic);
             opacity: var(--spotlight-opacity);
         }
 
-        #presentation-container { 
-            width: 100%; height: 100%; 
-            position: relative; z-index: 1;
-        }
+        #presentation-container { width: 100%; height: 100%; position: relative; z-index: 1; }
 
         /* Navigation Layers */
-        .click-layer {
-            position: absolute; top: 0; height: 100%; width: 20%; 
-            z-index: 5000; cursor: pointer;
-        }
+        .click-layer { position: absolute; top: 0; height: 100%; width: 15%; z-index: 5000; cursor: pointer; }
         #click-left { left: 0; }
         #click-right { right: 0; }
 
-        /* Slide Animation System */
+        /* Slide Transitions */
         .slide {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            padding: 5% 10%;
+            padding: 5% 8%;
             display: flex; flex-direction: column; justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transform: scale(1.08); 
-            filter: blur(15px);
-            transition: opacity 0.9s var(--ease-cinematic),
-                        transform 1.1s var(--ease-cinematic),
-                        filter 0.9s var(--ease-cinematic);
-            will-change: transform, opacity, filter;
+            transform: scale(1.05) translateY(20px);
+            filter: blur(10px);
+            transition: opacity 0.8s var(--ease-cinematic),
+                        transform 1s var(--ease-cinematic),
+                        filter 0.8s var(--ease-cinematic);
+            will-change: transform, opacity;
         }
 
         .slide.active {
             opacity: 1;
             pointer-events: auto;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
             filter: blur(0);
             z-index: 10;
         }
 
-        .slide.prev {
-            opacity: 0;
-            transform: scale(0.94) translateX(-80px);
-            filter: blur(15px);
-        }
-
-        .slide.next {
-            opacity: 0;
-            transform: scale(1.06) translateX(80px);
-            filter: blur(15px);
-        }
-
-        /* Staggered Content Animation */
-        .slide > * {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.9s var(--ease-enter);
-        }
-
-        .slide.active > * {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .slide.active > *:nth-child(1) { transition-delay: 0.15s; }
-        .slide.active > *:nth-child(2) { transition-delay: 0.25s; }
-        .slide.active > *:nth-child(3) { transition-delay: 0.35s; }
-        
-        .slide .card, .slide li, .slide .asset-preview, .slide .mockup-img {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s var(--ease-cinematic);
-        }
-        .slide.active .card, .slide.active li, .slide.active .asset-preview, .slide.active .mockup-img {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .slide.active .card:nth-child(1) { transition-delay: 0.4s; }
-        .slide.active .card:nth-child(2) { transition-delay: 0.5s; }
-        .slide.active .card:nth-child(3) { transition-delay: 0.6s; }
+        /* Animation Stagger */
+        .slide > * { opacity: 0; transform: translateY(20px); transition: all 0.8s var(--ease-enter); }
+        .slide.active > * { opacity: 1; transform: translateY(0); }
+        .slide.active > *:nth-child(1) { transition-delay: 0.1s; }
+        .slide.active > *:nth-child(2) { transition-delay: 0.2s; }
+        .slide.active > *:nth-child(3) { transition-delay: 0.3s; }
+        .slide.active > *:nth-child(4) { transition-delay: 0.4s; }
 
         /* Typography */
         h1 { 
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 800; 
-            margin-bottom: 20px; 
-            letter-spacing: -3px;
-            line-height: 1.05;
-            background: linear-gradient(180deg, var(--text-main) 30%, var(--text-muted) 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800; line-height: 1.1; letter-spacing: -3px;
+            margin-bottom: 20px;
+            color: var(--text-main);
         }
         
-        h2 { 
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            color: var(--text-main); 
-            font-weight: 700;
-            margin-bottom: 30px; 
-            letter-spacing: -1.5px;
-        }
-        
-        p, li { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); }
-        
+        h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 20px; letter-spacing: -1.5px; }
+        h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        p, li { font-size: 1.15rem; line-height: 1.6; color: var(--text-muted); }
+
         .subhead {
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 0.85rem;
-            color: var(--primary);
-            font-weight: 800;
-            margin-bottom: 25px;
-            display: block;
+            text-transform: uppercase; letter-spacing: 4px; font-size: 0.8rem;
+            color: var(--primary); font-weight: 800; margin-bottom: 20px; display: block;
         }
 
         /* Layout Grids */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
-        
-        /* Components */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+        /* UI Components */
         .card {
-            background: var(--card-glass); 
+            background: var(--card-glass);
             border: 1px solid var(--card-border);
-            border-radius: 24px; 
-            padding: 40px; 
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            transition: all 0.5s var(--ease-cinematic);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
         }
-        
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            background: rgba(244, 182, 34, 0.05);
-        }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
 
         .asset-preview {
-            width: 100%;
-            height: auto;
-            max-height: 200px;
-            object-fit: contain;
-            margin-bottom: 24px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            width: 100%; height: auto; border-radius: 12px;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
         }
 
         .mockup-img {
-            width: 100%;
-            height: auto;
-            max-height: 65vh;
-            object-fit: cover;
-            border-radius: 24px;
+            width: 100%; height: auto; max-height: 60vh;
+            object-fit: cover; border-radius: 20px;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.3);
             border: 1px solid var(--border);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5);
         }
 
         .color-swatch {
-            height: 100px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            border: 1px solid var(--card-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.2rem;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+            height: 120px; border-radius: 12px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; border: 1px solid var(--border);
         }
 
-        /* Controls */
-        .controls-minimal {
-            position: absolute; bottom: 40px; right: 60px; 
-            display: flex; align-items: center; gap: 15px;
-            z-index: 10000;
+        /* Evolution Comparison */
+        .comparison-tag {
+            font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+            padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 10px;
+        }
+        .tag-old { background: #ef4444; color: white; }
+        .tag-new { background: #10b981; color: white; }
+
+        /* Nav Interface */
+        .interface-layer { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 10000; }
+        
+        .progress-bar {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--border); pointer-events: auto;
+        }
+        .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.8s ease; }
+
+        .slide-counter {
+            position: absolute; bottom: 40px; left: 60px; font-weight: 800;
+            font-size: 0.8rem; color: var(--text-muted); letter-spacing: 2px;
         }
 
-        .btn-minimal { 
-            background: var(--card-glass); 
-            border: 1px solid var(--border); 
-            color: var(--text-muted); 
-            width: 54px; height: 54px; border-radius: 50%; cursor: pointer; 
+        .controls {
+            position: absolute; bottom: 40px; right: 60px;
+            display: flex; gap: 15px; pointer-events: auto;
+        }
+        .btn-nav {
+            width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--border);
+            background: var(--card-glass); color: var(--text-main); cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease; backdrop-filter: blur(10px);
         }
-        .btn-minimal:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: scale(1.1); }
-        
+        .btn-nav:hover { background: var(--primary); color: #000; border-color: var(--primary); transform: scale(1.1); }
+
         .theme-toggle {
-            position: absolute; top: 40px; left: 40px;
-            width: 44px; height: 44px;
-            background: var(--card-glass);
-            border: 1px solid var(--border);
-            border-radius: 50%;
+            position: absolute; top: 40px; right: 40px; pointer-events: auto;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--card-glass); border: 1px solid var(--border);
+            color: var(--text-main); cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 10000;
-            color: var(--text-main);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
-        .progress-indicator {
-            position: absolute; top: 0; left: 0; width: 100%; height: 5px;
-            background: var(--border); z-index: 100;
-        }
-        .progress-fill {
-            height: 100%; width: 0%;
-            background: var(--primary);
-            transition: width 1s var(--ease-cinematic);
-            box-shadow: 0 0 20px var(--primary);
-        }
-
-        .slide-number {
-            position: absolute; bottom: 40px; left: 60px;
-            font-weight: 700; color: var(--text-muted);
-            font-size: 0.85rem; letter-spacing: 2px;
-            opacity: 0.6;
-        }
-
-        /* Responsive Fixes */
-        @media (max-width: 1024px) {
-            .grid-2 { grid-template-columns: 1fr; gap: 40px; }
-            .grid-3 { grid-template-columns: 1fr; }
-            .slide { padding: 60px 40px; }
-            h1 { font-size: 3rem; }
-            h2 { font-size: 2.2rem; }
-            .mockup-img { max-height: 40vh; }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .slide { padding: 80px 30px; }
+            h1 { font-size: 2.8rem; }
+            .controls { right: 30px; bottom: 30px; }
+            .slide-counter { left: 30px; bottom: 30px; }
         }
     </style>
 </head>
 <body>
 
-<div class="spotlight-container">
-    <div class="spotlight" id="spotlight"></div>
+<div class="spotlight-container"><div class="spotlight" id="spotlight"></div></div>
+
+<div class="interface-layer">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="slide-counter" id="slide-counter">01 / 22</div>
+    <div class="controls">
+        <button class="btn-nav" id="btn-prev"><i class="fa-solid fa-arrow-left"></i></button>
+        <button class="btn-nav" id="btn-next"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+    <button class="theme-toggle" id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
 </div>
-
-<button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
-    <i class="fa-solid fa-moon"></i>
-</button>
-
-<div class="progress-indicator"><div class="progress-fill" id="progress-bar"></div></div>
-<div class="slide-number" id="slide-counter">01 / 15</div>
 
 <div id="presentation-container">
     <div class="click-layer" id="click-left"></div>
     <div class="click-layer" id="click-right"></div>
 
-    <!-- Slide 1: Header -->
-    <div class="slide" data-theme="gold">
+    <!-- 01: Title -->
+    <div class="slide">
         <div class="grid-2">
             <div>
-                <span class="subhead">BRAND IDENTITY SYSTEM</span>
+                <span class="subhead">IDENTITY GUIDELINE V2.2</span>
                 <h1>ONE VOICE</h1>
-                <p style="font-size: 2.4rem; color: var(--primary); font-weight: 400; margin-bottom: 20px;">សម្លេងខ្មែរតែមួយ</p>
-                <p style="max-width: 500px; opacity: 0.8;">A professional guide for a unified presence grounded in dignity and cultural strength.</p>
+                <p style="font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;">សម្លេងខ្មែរតែមួយ</p>
+                <p>មគ្គុទ្ទេសក៍អត្តសញ្ញាណម៉ាកសញ្ញាដែលត្រូវបានកែលម្អថ្មី ផ្អែកលើបេតិកភណ្ឌ និងភាពច្បាស់លាស់នៃសម័យកាលឌីជីថល។</p>
             </div>
-            <div style="display: flex; justify-content: center;">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" class="asset-preview" style="max-height: 400px; max-width: 100%;" alt="Master Logo">
-            </div>
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" class="asset-preview" alt="Main Logo">
         </div>
     </div>
 
-    <!-- Slide 2: Core Values -->
+    <!-- 02: Essence -->
     <div class="slide">
         <span class="subhead">THE PILLARS</span>
         <h2>Brand Essence</h2>
         <div class="grid-3">
             <div class="card">
-                <div>
-                    <i class="fa-solid fa-fingerprint" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 24px;"></i>
-                    <h3>Identity</h3>
-                </div>
-                <p>A unified voice representing Khmer culture, peace, and national integrity.</p>
+                <i class="fa-solid fa-dove" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>Unity</h3>
+                <p>សម្លេងតែមួយតំណាងឱ្យមនុស្សរាប់លាននាក់។ ភាពខ្លាំងដែលកើតចេញពីសន្តិភាព និងការរួមរួមគ្នា។</p>
             </div>
             <div class="card">
-                <div>
-                    <i class="fa-solid fa-hand-holding-heart" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 24px;"></i>
-                    <h3>Values</h3>
-                </div>
-                <p>Dignity is our foundation. We act as a single, collective resonance.</p>
+                <i class="fa-solid fa-scroll" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>Heritage</h3>
+                <p>ការរចនាបែបទំនើបដែលចាក់គ្រឹះយ៉ាងរឹងមាំលើមូលដ្ឋានគ្រឹះនៃវប្បធម៌ខ្មែរដែលមិនចេះរីងស្ងួត។</p>
             </div>
             <div class="card">
-                <div>
-                    <i class="fa-solid fa-mountain-sun" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 24px;"></i>
-                    <h3>Vision</h3>
-                </div>
-                <p>Expanding from the center of Khmer culture outward into the global stage.</p>
+                <i class="fa-solid fa-bolt" style="font-size: 2rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <h3>Impact</h3>
+                <p>អត្តសញ្ញាណដែលផ្តល់នូវសញ្ញាណវិជ្ជមាន និងភាពទាក់ទាញតាមរយៈសោភ័ណភាពច្បាស់លាស់។</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 3: The Spiral Mark -->
+    <!-- 03: The Symbol -->
     <div class="slide">
         <div class="grid-2">
-            <div style="display: flex; justify-content: center;">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-02-1.png" style="width: 320px; height: 320px; filter: drop-shadow(0 0 40px rgba(244,182,34,0.1));" alt="Spiral Concept">
-            </div>
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-02.png" style="width: 350px;" alt="Spiral">
             <div>
                 <span class="subhead">SYMBOLISM</span>
                 <h2>The Spiral Mark</h2>
-                <ul style="list-style: none; padding-left: 0;">
-                    <li style="border-left: 3px solid var(--primary); padding-left: 24px; margin-bottom: 24px;">
-                        <h3 style="color: var(--text-main);">Movement</h3>
-                        <p>A gathering of individual voices into a single focal point.</p>
-                    </li>
-                    <li style="border-left: 3px solid var(--primary); padding-left: 24px; margin-bottom: 24px;">
-                        <h3 style="color: var(--text-main);">Strength</h3>
-                        <p>Inner spiritual awakening and the awakening of a nation.</p>
-                    </li>
-                    <li style="border-left: 3px solid var(--primary); padding-left: 24px;">
-                        <h3 style="color: var(--text-main);">Heritage</h3>
-                        <p>Symbolizing the unbreakable continuity of the Khmer spirit.</p>
-                    </li>
-                </ul>
+                <p>និមិត្តសញ្ញាស្នូលតំណាងឱ្យ **ស្មារតីនៃការភ្ញាក់រលឹក**។ វាគឺជាខ្សែបន្ទាត់ដែលបង្ហាញពីការប្រមូលផ្តុំនៃសម្លេងបុគ្គលម្នាក់ៗឱ្យទៅជាសម្លេងរួមតែមួយដ៏មានឥទ្ធិពល។</p>
+                <p style="margin-top: 20px;">ទម្រង់នេះតំណាងឱ្យការបន្តនៃចំណេះដឹង និងថាមពលដែលកំពុងកើនឡើងនៃប្រជាជាតិដែលរួបរួមគ្នា។</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 4: Variations -->
+    <!-- 04: Brand Evolution -->
     <div class="slide">
-        <span class="subhead">VARIATIONS</span>
-        <h2>Master Lockups</h2>
-        <div class="grid-3">
-            <div class="card">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" class="asset-preview" alt="Horizontal">
-                <h3>Horizontal</h3>
-                <p>Primary lockup for web, letterheads, and wide format surfaces.</p>
-            </div>
-            <div class="card">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-03-1.png" class="asset-preview" alt="Vertical">
-                <h3>Vertical</h3>
-                <p>Secondary lockup for vertical spaces, social profile media, and posters.</p>
-            </div>
-            <div class="card">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-02-1.png" class="asset-preview" alt="Symbol">
-                <h3>Icon Only</h3>
-                <p>Minimalist touchpoint for favicons, watermarks, or merchandise.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 5: Color System -->
-    <div class="slide">
-        <span class="subhead">TECHNICAL SPECIFICATIONS</span>
-        <h2>Color System</h2>
+        <span class="subhead">EVOLUTION</span>
+        <h2>ការកែលម្អឱ្យកាន់តែប្រសើរ</h2>
         <div class="grid-2">
-            <div class="card">
-                <div class="color-swatch" style="background: #F4B622; color: #000;">#F4B622</div>
-                <h3>Golden Voice Yellow</h3>
-                <p style="font-family: monospace; font-size: 1rem; color: var(--primary);">RGB: 244, 182, 34<br>CMYK: 4, 31, 98, 0</p>
-                <p style="margin-top: 15px; font-size: 1rem;">Represents sacred energy, moral strength, and spiritual light.</p>
+            <div class="card" style="text-align: center;">
+                <span class="comparison-tag tag-old">ជំនាន់មុន</span>
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-02-1.png" style="height: 120px; opacity: 0.4; margin-bottom: 20px;">
+                <p style="font-size: 0.9rem; color: #ef4444;">បញ្ហា៖ ខ្សែបន្ទាត់ក្រាស់ពេក និងចន្លោះតូច ដែលនាំឱ្យមានការយល់ច្រឡំថា <strong>"ស្រដៀងធូបមូស"</strong>។</p>
             </div>
-            <div class="card">
-                <div class="color-swatch" style="background: #1E1E1E; border: 1px solid var(--border);">#1E1E1E</div>
-                <h3>Deep Charcoal</h3>
-                <p style="font-family: monospace; font-size: 1rem; color: var(--text-muted);">RGB: 30, 30, 30<br>CMYK: 73, 67, 65, 78</p>
-                <p style="margin-top: 15px; font-size: 1rem;">Represents stability, depth, and serious cultural commitment.</p>
+            <div class="card" style="text-align: center; border-color: var(--primary);">
+                <span class="comparison-tag tag-new">ជំនាន់ចុងក្រោយ</span>
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-02.png" style="height: 120px; margin-bottom: 20px;">
+                <p style="font-size: 0.9rem; color: #10b981;">ដំណោះស្រាយ៖ បង្កើនចន្លោះឱ្យទូលាយ និងធ្វើឱ្យចុងខ្សែស្រួចតូច (Tapered) ដើម្បីបង្កើតភាពប្រណីត និងភាពថ្លៃថ្នូរ។</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 6: Typography -->
+    <!-- 05: Construction -->
+    <div class="slide">
+        <span class="subhead">CONSTRUCTION</span>
+        <h2>Logo Geometry</h2>
+        <div class="grid-2">
+            <div class="card" style="border: 1px dashed var(--primary); text-align: center;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-02.png" style="width: 200px; opacity: 0.5;">
+                <p style="font-size: 0.8rem; margin-top: 10px;">GRID SYSTEM: 12x12</p>
+            </div>
+            <div>
+                <h3>The Proportion Rule</h3>
+                <p>និមិត្តសញ្ញានេះត្រូវបានបង្កើតឡើងនៅលើស៊េរីនៃរង្វង់មូលដែលធានានូវតុល្យភាពធម្មជាតិ និងភាពសុខដុមរមនាក្នុងការមើលឃើញគ្រប់កម្រិត។</p>
+                <p style="margin-top: 15px; font-weight: 700;">Corner Radius: ២០% នៃទទឹងនិមិត្តសញ្ញា។</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 06: Version 1 (Charcoal) -->
+    <div class="slide">
+        <span class="subhead">BRAND VERSION 1</span>
+        <h2>The Premium Charcoal Identity</h2>
+        <div class="card" style="background: #111; color: #fff; padding: 40px; border-radius: 24px;">
+            <div class="grid-3">
+                <div style="text-align: center;">
+                    <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" style="height: 50px; filter: brightness(1.2);">
+                    <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">HORIZONTAL GOLD</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-03.png" style="height: 100px; filter: brightness(1.2);">
+                    <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">VERTICAL GOLD</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-02.png" style="height: 50px; filter: brightness(1.2);">
+                    <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">SYMBOL GOLD</p>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 25px;">**Version 1** គឺជាការប្រើប្រាស់ចម្បងសម្រាប់ឌីជីថល និងផលិតផលប្រណីត។ វាប្រើប្រាស់ពណ៌ Deep Charcoal ដើម្បីធ្វើឱ្យពណ៌ "Voice Gold" បញ្ចេញពន្លឺប្រកបដោយអំណាច។</p>
+    </div>
+
+    <!-- 07: Version 2 (Paper) -->
+    <div class="slide">
+        <span class="subhead">BRAND VERSION 2</span>
+        <h2>The Modern Paper Identity</h2>
+        <div class="card" style="background: #f8f8f8; color: #111; padding: 40px; border-radius: 24px; border: 1px solid #ddd;">
+            <div class="grid-3">
+                <div style="text-align: center;">
+                    <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" style="height: 50px; filter: contrast(1.2);">
+                    <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">HORIZONTAL DARK</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-03.png" style="height: 100px; filter: contrast(1.2);">
+                    <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">VERTICAL DARK</p>
+                </div>
+                <div style="text-align: center;">
+                    <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-02.png" style="height: 50px; filter: contrast(1.2);">
+                    <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">SYMBOL DARK</p>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 25px;">**Version 2** ត្រូវបានរចនាឡើងសម្រាប់ភាពច្បាស់លាស់ក្នុងការបោះពុម្ព និងការប្រើប្រាស់ក្នុងស្ថាប័ន។ វាសង្កត់ធ្ងន់លើភាពស្អាតស្អំ និងភាពច្បាស់លាស់។</p>
+    </div>
+
+    <!-- 08: Color Specification -->
+    <div class="slide">
+        <span class="subhead">TECHNICAL</span>
+        <h2>Color Palette</h2>
+        <div class="grid-3">
+            <div>
+                <div class="color-swatch" style="background: #F4B622; color: #000;">#F4B622</div>
+                <h3>Voice Gold</h3>
+                <p>CMYK: 4, 31, 98, 0</p>
+            </div>
+            <div>
+                <div class="color-swatch" style="background: #111111; color: #fff;">#111111</div>
+                <h3>Deep Charcoal</h3>
+                <p>CMYK: 70, 60, 60, 100</p>
+            </div>
+            <div>
+                <div class="color-swatch" style="background: #F8F8F8; border: 1px solid #ddd; color: #000;">#F8F8F8</div>
+                <h3>Clean Paper</h3>
+                <p>CMYK: 0, 0, 0, 3</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 09: Typography Khmer -->
     <div class="slide">
         <span class="subhead">TYPOGRAPHY</span>
-        <h2>Type Hierarchy</h2>
-        <div class="grid-2">
-            <div class="card">
-                <p class="subhead" style="margin-bottom: 15px;">Primary (Khmer)</p>
-                <h1 style="font-family: 'Kantumruy Pro'; font-size: 4rem; margin-bottom: 10px; -webkit-text-fill-color: var(--text-main); background: none;">សម្លេងខ្មែរ</h1>
-                <h3 style="margin-bottom: 10px;">Niradei</h3>
-                <p>Chosen for its cultural elegance, high readability, and contemporary structure.</p>
-            </div>
-            <div class="card">
-                <p class="subhead" style="margin-bottom: 15px;">Secondary (Global)</p>
-                <h1 style="font-family: 'Plus Jakarta Sans'; font-size: 4rem; margin-bottom: 10px; -webkit-text-fill-color: var(--text-main); background: none;">ONE VOICE</h1>
-                <h3 style="margin-bottom: 10px;">Jakarta Sans</h3>
-                <p>A clean geometric sans-serif for professional English pairing.</p>
-            </div>
+        <h2>Khmer Hierarchy</h2>
+        <div class="card">
+            <h1 style="font-family: 'Kantumruy Pro'; color: var(--primary); margin: 0;">សម្លេងខ្មែរតែមួយ</h1>
+            <p style="font-family: 'Kantumruy Pro'; font-size: 2rem; margin-bottom: 20px;">Kantumruy Pro - Modern Sans</p>
+            <p>ត្រូវបានជ្រើសរើសសម្រាប់ភាពងាយស្រួលក្នុងការអានខ្ពស់ក្នុងឌីជីថល។ ខ្សែបន្ទាត់របស់វាឆ្លុះបញ្ចាំងពីនិមិត្តសញ្ញា Spiral។</p>
         </div>
     </div>
 
-    <!-- Slide 7: Clear Space -->
+    <!-- 10: Typography English -->
+    <div class="slide">
+        <span class="subhead">TYPOGRAPHY</span>
+        <h2>Global Pairing</h2>
+        <div class="card">
+            <h1 style="font-family: 'Plus Jakarta Sans'; margin: 0;">ONE VOICE IDENTITY</h1>
+            <p style="font-family: 'Plus Jakarta Sans'; font-size: 2rem; margin-bottom: 20px;">Plus Jakarta Sans - Geometric</p>
+            <p>ប្រភេទអក្សរ Sans-serif បែបធរណីមាត្រដែលផ្តល់នូវភាពផ្ទុយគ្នាប្រកបដោយវិជ្ជាជីវៈជាមួយអក្សរខ្មែរ।</p>
+        </div>
+    </div>
+
+    <!-- 11: Clear Space -->
     <div class="slide">
         <div class="grid-2">
+            <div class="card" style="border: 2px dashed var(--primary); text-align: center;">
+                <p style="color: var(--primary); font-weight: 800;">X SAFE ZONE</p>
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" style="width: 250px; padding: 40px; opacity: 0.5;">
+            </div>
             <div>
                 <span class="subhead">CONSTRAINTS</span>
-                <h2>Safe Zone</h2>
-                <p>To ensure integrity, a safe zone must always be maintained. No other visual elements, text, or margins should enter this space.</p>
-                <p style="margin-top: 24px; font-weight: 700; color: var(--text-main);">Rule of "S":</p>
-                <p>Safe zone = Radius of the inner spiral mark (S).</p>
-            </div>
-            <div class="card" style="border: 1px dashed var(--primary); background: rgba(244,182,34,0.02);">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="opacity: 0.6; padding: 20px;">
-                <p style="text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--primary);">S-SPACE BOUNDARY</p>
+                <h2>The Rule of Space</h2>
+                <p>ដើម្បីរក្សាឥទ្ធិពលអតិបរមា Logo ត្រូវតែព័ទ្ធជុំវិញដោយ "Safe Zone" ដែលមានទំហំយ៉ាងតិច ៥០% នៃកម្ពស់របស់ Spiral Mark។</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 8: Sizes -->
+    <!-- 12: Logo Misuse -->
     <div class="slide">
-        <span class="subhead">LEGIBILITY</span>
-        <h2>Minimum Scales</h2>
-        <div class="grid-3">
-            <div class="card">
-                <h1 style="font-size: 3rem; background: none; -webkit-text-fill-color: var(--primary);">120px</h1>
-                <h3>Digital Minimum</h3>
-                <p>The smallest width for 72dpi screens (web, mobile icons).</p>
-            </div>
-            <div class="card">
-                <h1 style="font-size: 3rem; background: none; -webkit-text-fill-color: var(--primary);">30mm</h1>
-                <h3>Print Minimum</h3>
-                <p>The smallest width for physical printing (business cards, stationery).</p>
-            </div>
-            <div class="card">
-                <h1 style="font-size: 3rem; background: none; -webkit-text-fill-color: var(--primary);">16px</h1>
-                <h3>Favicon</h3>
-                <p>Use ONLY the Spiral Mark for micro-applications.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 9: Logo Misuse -->
-    <div class="slide">
-        <span class="subhead">DO NOT</span>
+        <span class="subhead">GUIDELINES</span>
         <h2>Improper Usage</h2>
         <div class="grid-3">
-            <div class="card" style="text-align: center;">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="transform: skewX(-20deg); opacity: 0.4;">
-                <p style="color: #f87171; font-weight: 700;">No Distortion</p>
+            <div class="card" style="text-align: center; opacity: 0.6;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" style="transform: rotate(20deg);">
+                <p style="color: #ef4444; font-weight: 700; margin-top: 10px;">កុំបង្វិល</p>
             </div>
-            <div class="card" style="text-align: center;">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="filter: hue-rotate(180deg); opacity: 0.4;">
-                <p style="color: #f87171; font-weight: 700;">No Color Swapping</p>
+            <div class="card" style="text-align: center; opacity: 0.6;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" style="filter: grayscale(1);">
+                <p style="color: #ef4444; font-weight: 700; margin-top: 10px;">កុំផ្លាស់ប្តូរពណ៌</p>
             </div>
-            <div class="card" style="text-align: center;">
-                <img src="https://sophatchy.com/wp-content/uploads/2026/02/OneVoice-01-1.png" style="filter: drop-shadow(10px 10px 0 red); opacity: 0.4;">
-                <p style="color: #f87171; font-weight: 700;">No Shadows/Effects</p>
+            <div class="card" style="text-align: center; opacity: 0.6;">
+                <img src="https://sophatchy.com/wp-content/uploads/2026/02/Logo-Onevoice-update-01.png" style="filter: blur(5px);">
+                <p style="color: #ef4444; font-weight: 700; margin-top: 10px;">កុំបន្ថែម Effect ផ្សេងៗ</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 10: Brand Vibe -->
+    <!-- 13: Iconography -->
     <div class="slide">
+        <span class="subhead">SYSTEM</span>
+        <h2>Iconography Style</h2>
+        <div class="grid-4">
+            <div class="card" style="text-align: center;"><i class="fa-solid fa-microphone"></i><p>Resonance</p></div>
+            <div class="card" style="text-align: center;"><i class="fa-solid fa-users-viewfinder"></i><p>Community</p></div>
+            <div class="card" style="text-align: center;"><i class="fa-solid fa-shield-halved"></i><p>Integrity</p></div>
+            <div class="card" style="text-align: center;"><i class="fa-solid fa-globe"></i><p>Presence</p></div>
+        </div>
+        <p style="margin-top: 30px;">រូបតំណាងគួរតែមានលក្ខណៈសាមញ្ញ ខ្សែបន្ទាត់ស្តើង (2pt) ដើម្បីរក្សាសោភ័ណភាពស្អាតរបស់ម៉ាក។</p>
+    </div>
+
+    <!-- 14: Layout Grid -->
+    <div class="slide">
+        <span class="subhead">DIGITAL</span>
+        <h2>Layout Grid</h2>
         <div class="grid-2">
+            <div style="height: 300px; border: 1px solid var(--border); display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px;">
+                <div style="background: var(--primary); opacity: 0.1;"></div><div style="background: var(--primary); opacity: 0.1;"></div>
+                <div style="background: var(--primary); opacity: 0.1;"></div><div style="background: var(--primary); opacity: 0.1;"></div>
+                <div style="background: var(--primary); opacity: 0.1;"></div><div style="background: var(--primary); opacity: 0.1;"></div>
+                <div style="background: var(--primary); opacity: 0.1;"></div><div style="background: var(--primary); opacity: 0.1;"></div>
+                <div style="background: var(--primary); opacity: 0.1;"></div><div style="background: var(--primary); opacity: 0.1;"></div>
+                <div style="background: var(--primary); opacity: 0.1;"></div><div style="background: var(--primary); opacity: 0.1;"></div>
+            </div>
             <div>
-                <span class="subhead">TONE & MANNER</span>
-                <h2>Visual Direction</h2>
-                <p>Visual communications should feel high-contrast, serious, and deeply cultural. We prioritize empty space to allow the voice to breathe.</p>
-            </div>
-            <div class="card" style="justify-content: center; gap: 10px;">
-                <p style="font-size: 2rem; font-weight: 800; color: var(--text-main);">DIGNIFIED</p>
-                <p style="font-size: 2rem; font-weight: 800; opacity: 0.6;">POWERFUL</p>
-                <p style="font-size: 2rem; font-weight: 800; opacity: 0.3;">CALM</p>
+                <h3>12-Column Digital Grid</h3>
+                <p>រាល់ផលិតផលឌីជីថលទាំងអស់ប្រើប្រាស់ប្រព័ន្ធ Grid ១២ ជួរ ដើម្បីបង្កើតស្ថេរភាពរចនាសម្ព័ន្ធនៅគ្រប់ Web Properties។</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 11: Application - Stationery -->
+    <!-- 15: Mockup Stationary -->
     <div class="slide">
         <div class="grid-2">
-            <img src="https://sophatchy.com/wp-content/uploads/2026/02/19888193_Elegant_branding_stationery_set_mockup_template_Premium_Psd_4.jpg" class="mockup-img" alt="Stationery Mockup">
-            <div>
-                <span class="subhead">APPLICATION</span>
-                <h2>Corporate Stationery</h2>
-                <p>Consistency in physical correspondence reinforces professionalism. The logo is applied with minimal clutter on premium paper stock, favoring white space and the primary charcoal/gold palette.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 12: Application - Apparel -->
-    <div class="slide">
-        <div class="grid-2">
-            <div>
-                <span class="subhead">APPLICATION</span>
-                <h2>Identity & Community</h2>
-                <p>On apparel, the icon serves as a mark of unity. We favor large-scale, high-contrast placement that allows the spiral to be recognized instantly from a distance.</p>
-            </div>
-            <img src="https://sophatchy.com/wp-content/uploads/2026/02/422977444_15476b43-b97f-479b-9425-2d8915a59391-scaled.jpg" class="mockup-img" alt="Apparel Mockup">
-        </div>
-    </div>
-
-    <!-- Slide 13: Application - Environment -->
-    <div class="slide">
-        <div class="grid-2">
-            <img src="https://sophatchy.com/wp-content/uploads/2026/02/134026767_1aa0632a-8c18-4330-b973-d7aec5ab6124-scaled.jpg" class="mockup-img" alt="Environmental Mockup">
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/19888193_Elegant_branding_stationery_set_mockup_template_Premium_Psd_4.jpg" class="mockup-img" alt="Stationary">
             <div>
                 <span class="subhead">APPLICATION</span>
-                <h2>Lifestyle & Experience</h2>
-                <p>The brand lives in the real world through sustainable materials and thoughtful design. These touchpoints bridge the gap between cultural heritage and modern daily utility.</p>
+                <h2>Corporate Print</h2>
+                <p>ការដាក់បង្ហាញម៉ាកសញ្ញាលើក្រដាសប្រណីត។ ការអនុវត្តនេះតំណាងឱ្យយុទ្ធសាស្ត្រ **Modern Paper** របស់យើង។</p>
             </div>
         </div>
     </div>
 
-    <!-- Slide 14: Tagline -->
+    <!-- 16: Mockup Apparel -->
+    <div class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="subhead">APPLICATION</span>
+                <h2>Identity Gear</h2>
+                <p>ការប្រើប្រាស់ពណ៌ផ្ទុយគ្នារវាងខ្មៅ និងមាស។ ការអនុវត្តនេះតំណាងឱ្យយុទ្ធសាស្ត្រ **Premium Charcoal** របស់យើង។</p>
+            </div>
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/422977444_15476b43-b97f-479b-9425-2d8915a59391-scaled.jpg" class="mockup-img" alt="Apparel">
+        </div>
+    </div>
+
+    <!-- 17: Mockup Lifestyle -->
+    <div class="slide">
+        <div class="grid-2">
+            <img src="https://sophatchy.com/wp-content/uploads/2026/02/134026767_1aa0632a-8c18-4330-b973-d7aec5ab6124-scaled.jpg" class="mockup-img" alt="Lifestyle">
+            <div>
+                <span class="subhead">APPLICATION</span>
+                <h2>Environmental Presence</h2>
+                <p>ការបញ្ចូលម៉ាកសញ្ញាទៅក្នុងជីវភាពរស់នៅប្រចាំថ្ងៃ។ ម៉ាកនេះមានភាពស៊ីវិល័យ និងទំនើប។</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 18: Photography -->
+    <div class="slide">
+        <span class="subhead">IMAGE STYLE</span>
+        <h2>Photography Direction</h2>
+        <div class="grid-3">
+            <div style="height: 200px; background: #333; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-image" style="font-size: 3rem; opacity: 0.2;"></i></div>
+            <div style="height: 200px; background: #444; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-image" style="font-size: 3rem; opacity: 0.2;"></i></div>
+            <div style="height: 200px; background: #555; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-image" style="font-size: 3rem; opacity: 0.2;"></i></div>
+        </div>
+        <p style="margin-top: 30px;">**Atmospheric & Human.** យើងផ្តល់អាទិភាពលើរូបភាពដែលមានពន្លឺធម្មជាតិ និងការតភ្ជាប់ជាមួយមនុស្សពិត។</p>
+    </div>
+
+    <!-- 19: Digital UI -->
+    <div class="slide">
+        <span class="subhead">ECOSYSTEM</span>
+        <h2>Digital Touchpoints</h2>
+        <div class="grid-3">
+            <div class="card">
+                <h3>Mobile App</h3>
+                <p>Card-based UI, ចន្លោះស្មើគ្នា, សង្កត់ធ្ងន់លើរូបតំណាង។</p>
+            </div>
+            <div class="card">
+                <h3>Social Feed</h3>
+                <p>ចំណងជើងធំៗ, ការប្រើពណ៌មាសជាចំណុចទាក់ទាញ។</p>
+            </div>
+            <div class="card">
+                <h3>Web Platform</h3>
+                <p>ការប្រើប្រាស់ចន្លោះសឱ្យបានច្រើនដើម្បីភាពងាយស្រួល។</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 20: Tagline -->
     <div class="slide" style="text-align: center;">
         <span class="subhead">THE PROMISE</span>
-        <h1 style="font-size: clamp(2rem, 6vw, 5rem); line-height: 1.25; background: var(--text-main); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-            "We Rise With Dignity.<br>We speak as ONE VOICE."
+        <h1 style="background: linear-gradient(to bottom, var(--text-main), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            "We Rise with Dignity.<br>We Speak as ONE VOICE."
         </h1>
     </div>
 
-    <!-- Slide 15: Discussion -->
+    <!-- 21: Closing -->
     <div class="slide" style="text-align: center;">
         <span class="subhead">COLLABORATION</span>
-        <h2>Questions & Discussion</h2>
-        <p style="max-width: 600px; margin: 0 auto; margin-bottom: 40px;">Let’s define the future of our unified presence. Open for feedback on the brand identity system v1.0.</p>
-        <p style="font-size: 0.8rem; font-weight: 700; letter-spacing: 4px; opacity: 0.4;">ONE VOICE IDENTITY SYSTEM</p>
-    </div>
-
-    <!-- Navigation -->
-    <div class="controls-minimal">
-        <button class="btn-minimal" id="btn-prev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="btn-minimal" id="btn-next" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
+        <h2>Building the Future</h2>
+        <p style="max-width: 600px; margin: 0 auto; margin-bottom: 40px;">ធានាថាគ្រប់ចំណុចទំនាក់ទំនងឆ្លុះបញ្ចាំងពីបេតិកភណ្ឌរួបរួម និងវិជ្ជាជីវៈទំនើប។</p>
+        <p style="font-size: 0.8rem; font-weight: 800; opacity: 0.4; letter-spacing: 5px;">PHNOM PENH — 2026</p>
     </div>
 
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let currentSlide = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentIdx = 0;
         const slides = document.querySelectorAll('.slide');
-        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
         const slideCounter = document.getElementById('slide-counter');
         const spotlight = document.getElementById('spotlight');
-        const btnNext = document.getElementById('btn-next');
-        const btnPrev = document.getElementById('btn-prev');
-        const container = document.getElementById('presentation-container');
-        const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
 
-        // Theme Toggle Logic
-        themeToggle.addEventListener('click', () => {
-            const isLight = html.getAttribute('data-theme') === 'light';
-            if (isLight) {
-                html.removeAttribute('data-theme');
-                themeToggle.querySelector('i').className = 'fa-solid fa-moon';
-            } else {
-                html.setAttribute('data-theme', 'light');
-                themeToggle.querySelector('i').className = 'fa-solid fa-sun';
-            }
-        });
-
-        function updateUI() {
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active', 'prev', 'next');
-                if (index === currentSlide) slide.classList.add('active');
-                else if (index < currentSlide) slide.classList.add('prev');
-                else slide.classList.add('next');
+        function updateSlider() {
+            slides.forEach((s, i) => {
+                s.classList.remove('active');
+                if (i === currentIdx) s.classList.add('active');
             });
-
-            const progress = ((currentSlide + 1) / slides.length) * 100;
-            progressBar.style.width = `${progress}%`;
-            slideCounter.textContent = `${(currentSlide + 1).toString().padStart(2, '0')} / ${slides.length}`;
+            const progress = ((currentIdx + 1) / slides.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            slideCounter.textContent = `${(currentIdx + 1).toString().padStart(2, '0')} / ${slides.length}`;
         }
 
-        function nextSlide() {
-            if (currentSlide < slides.length - 1) {
-                currentSlide++;
-                updateUI();
-            }
-        }
+        const next = () => { if (currentIdx < slides.length - 1) { currentIdx++; updateSlider(); } };
+        const prev = () => { if (currentIdx > 0) { currentIdx--; updateSlider(); } };
 
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateUI();
-            }
-        }
+        document.getElementById('btn-next').onclick = next;
+        document.getElementById('btn-prev').onclick = prev;
+        document.getElementById('click-right').onclick = next;
+        document.getElementById('click-left').onclick = prev;
 
-        // Event Listeners
-        btnNext.addEventListener('click', nextSlide);
-        btnPrev.addEventListener('click', prevSlide);
-        document.getElementById('click-left').addEventListener('click', prevSlide);
-        document.getElementById('click-right').addEventListener('click', nextSlide);
+        document.onkeydown = (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') next();
+            if (e.key === 'ArrowLeft') prev();
+        };
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-        });
+        document.getElementById('theme-toggle').onclick = () => {
+            const isLight = html.getAttribute('data-theme') === 'light';
+            html.setAttribute('data-theme', isLight ? '' : 'light');
+            document.querySelector('#theme-toggle i').className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        };
 
-        // Mouse Spotlight Move
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 40;
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+        document.onmousemove = (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 50;
+            const y = (e.clientY / window.innerHeight - 0.5) * 50;
             spotlight.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-        });
+        };
 
-        // Touch Swipe
-        let touchStartX = 0;
-        container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
-        container.addEventListener('touchend', e => {
-            const diff = touchStartX - e.changedTouches[0].screenX;
-            if (Math.abs(diff) > 50) diff > 0 ? nextSlide() : prevSlide();
-        }, {passive: true});
-
-        updateUI();
+        updateSlider();
     });
 </script>
 
